@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Style & Animation - Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .test-section h2 {
+            margin-top: 0;
+            color: #ffd700;
+            font-size: 1.8em;
+        }
+
+        .test-area {
+            min-height: 200px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            position: relative;
+        }
+
+        .test-area::before {
+            content: "Move your mouse here to test the effect";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2em;
+            pointer-events: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 15px 0;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: #ff6b6b;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .magnetic {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px;
+            background: linear-gradient(45deg, #ff6b6b, #ffa726);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .magnetic:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .warning-box {
+            background: rgba(255, 193, 7, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 1000;
+        }
+
+        .interactive-elements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .element {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .element:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="status" id="status">Loading...</div>
+
+    <div class="container">
+        <h1>🎨 Cursor Style & Animation Test Page</h1>
+
+        <div class="info-box">
+            <strong>Instructions:</strong> This page helps you test all animation effects. Move your mouse around
+            different areas to see the effects in action. Use the buttons below to switch between different animation
+            types.
+        </div>
+
+        <div class="test-section">
+            <h2>🎯 Animation Type Selector</h2>
+            <div class="button-group">
+                <button onclick="setAnimation('trail')">Trail Effect</button>
+                <button onclick="setAnimation('particles')">Particle Effect</button>
+                <button onclick="setAnimation('ripple')">Ripple Effect</button>
+                <button onclick="setAnimation('magnetic')">Magnetic Effect</button>
+            </div>
+            <div class="warning-box">
+                <strong>Note:</strong> Make sure the plugin is enabled in your WordPress admin (Settings > Cursor Style
+                & Animation) and the animation type matches what you select here.
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🌟 Trail Effect Test Area</h2>
+            <p>Move your mouse around this area to see the trail effect. The trail should follow your cursor with a
+                smooth, colorful animation.</p>
+            <div class="test-area" id="trail-test">
+                <div style="position: absolute; top: 20px; left: 20px; font-size: 0.9em; opacity: 0.8;">
+                    Expected: Colorful trail following mouse movement
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✨ Particle Effect Test Area</h2>
+            <p>Move your mouse around this area to see the particle effect. Particles should spawn and float away from
+                your cursor.</p>
+            <div class="test-area" id="particle-test">
+                <div style="position: absolute; top: 20px; left: 20px; font-size: 0.9em; opacity: 0.8;">
+                    Expected: Particles spawning and floating away
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🌊 Ripple Effect Test Area</h2>
+            <p>Move your mouse around this area to see the ripple effect. Expanding circles should appear as you move
+                your cursor.</p>
+            <div class="test-area" id="ripple-test">
+                <div style="position: absolute; top: 20px; left: 20px; font-size: 0.9em; opacity: 0.8;">
+                    Expected: Expanding circular ripples
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧲 Magnetic Effect Test Area</h2>
+            <p>Move your mouse near these elements to see the magnetic effect. Elements should be attracted to your
+                cursor.</p>
+            <div class="test-area" id="magnetic-test">
+                <div class="magnetic" data-magnetic>Magnetic Button 1</div>
+                <div class="magnetic" data-magnetic>Magnetic Button 2</div>
+                <div class="magnetic" data-magnetic>Magnetic Button 3</div>
+                <div style="position: absolute; top: 20px; left: 20px; font-size: 0.9em; opacity: 0.8;">
+                    Expected: Elements attracted to mouse cursor
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔗 Interactive Elements Test</h2>
+            <p>Test cursor styles on different types of interactive elements:</p>
+            <div class="interactive-elements">
+                <a href="#" class="element">Link Element</a>
+                <button class="element">Button Element</button>
+                <input type="text" placeholder="Text Input" class="element">
+                <textarea placeholder="Textarea" rows="3" class="element"></textarea>
+                <div class="element" draggable="true">Draggable Element</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🔧 Troubleshooting</h2>
+            <div class="info-box">
+                <strong>If effects are not working:</strong>
+                <ul>
+                    <li>Check if the plugin is enabled in WordPress admin</li>
+                    <li>Verify JavaScript is enabled in your browser</li>
+                    <li>Check browser console for errors (F12)</li>
+                    <li>Clear browser cache and refresh the page</li>
+                    <li>Try a different browser</li>
+                    <li>Ensure the animation type matches in plugin settings</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Status indicator
+        function updateStatus(message) {
+            document.getElementById('status').textContent = message;
+        }
+
+        // Animation type selector
+        function setAnimation(type) {
+            updateStatus(`Switched to ${type} effect`);
+
+            // Update the page to show which effect should be active
+            const testAreas = document.querySelectorAll('.test-area');
+            testAreas.forEach(area => {
+                area.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+            });
+
+            const targetArea = document.getElementById(`${type}-test`);
+            if (targetArea) {
+                targetArea.style.borderColor = '#4caf50';
+                targetArea.style.borderWidth = '3px';
+            }
+        }
+
+        // Check if cursor animator is loaded
+        function checkCursorAnimator() {
+            if (typeof cursorAnimatorSettings !== 'undefined') {
+                updateStatus(`Plugin loaded: ${cursorAnimatorSettings.animationType} effect`);
+                setAnimation(cursorAnimatorSettings.animationType);
+            } else {
+                updateStatus('Plugin not detected - check WordPress admin');
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateStatus('Page loaded - checking plugin...');
+            setTimeout(checkCursorAnimator, 1000);
+
+            // Add some interactive feedback
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                });
+            });
+        });
+
+        // Mouse movement indicator
+        let mouseMoves = 0;
+        document.addEventListener('mousemove', function () {
+            mouseMoves++;
+            if (mouseMoves % 50 === 0) {
+                updateStatus(`Mouse active - ${mouseMoves} movements detected`);
+            }
+        });
+    </script>
+</body>
+
+</html>

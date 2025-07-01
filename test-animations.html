@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor Animator Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .test-area {
+            height: 200px;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f4ff;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .magnetic-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .magnetic-button:hover {
+            transform: scale(1.05);
+        }
+
+        .debug-info {
+            background: #333;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 20px 0;
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🎨 Cursor Animator Test Page</h1>
+
+        <div class="debug-info">
+            <strong>Debug Information:</strong><br>
+            <div id="debug-output">Loading...</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 Animation Test Areas</h2>
+            <p>Move your mouse over these areas to test different animation effects:</p>
+
+            <div class="test-area" id="trail-test">
+                🎯 Trail Effect Test Area<br>
+                Move your mouse here to see the trail animation
+            </div>
+
+            <div class="test-area" id="particle-test">
+                ✨ Particle Effect Test Area<br>
+                Move your mouse here to see particle effects
+            </div>
+
+            <div class="test-area" id="ripple-test">
+                🌊 Ripple Effect Test Area<br>
+                Move your mouse here to see ripple effects
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>🧲 Magnetic Effect Test</h2>
+            <p>Move your mouse near these buttons to see magnetic effects:</p>
+
+            <button class="magnetic-button magnetic">Magnetic Button 1</button>
+            <button class="magnetic-button magnetic">Magnetic Button 2</button>
+            <button class="magnetic-button magnetic">Magnetic Button 3</button>
+
+            <div class="magnetic-button magnetic" style="display: inline-block;">Magnetic Div</div>
+        </div>
+
+        <div class="test-section">
+            <h2>🎨 Cursor Style Test</h2>
+            <p>Test different cursor styles:</p>
+
+            <button onclick="changeCursorStyle('default')" class="magnetic-button">Default Cursor</button>
+            <button onclick="changeCursorStyle('pointer')" class="magnetic-button">Pointer Cursor</button>
+            <button onclick="changeCursorStyle('crosshair')" class="magnetic-button">Crosshair Cursor</button>
+            <button onclick="changeCursorStyle('text')" class="magnetic-button">Text Cursor</button>
+            <button onclick="changeCursorStyle('wait')" class="magnetic-button">Wait Cursor</button>
+            <button onclick="changeCursorStyle('move')" class="magnetic-button">Move Cursor</button>
+            <button onclick="changeCursorStyle('grab')" class="magnetic-button">Grab Cursor</button>
+            <button onclick="changeCursorStyle('zoom-in')" class="magnetic-button">Zoom In</button>
+            <button onclick="changeCursorStyle('zoom-out')" class="magnetic-button">Zoom Out</button>
+            <button onclick="changeCursorStyle('hidden')" class="magnetic-button">Hidden Cursor</button>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 Status Check</h2>
+            <div id="status-container">
+                <div class="status info">Checking plugin status...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mock settings for testing -->
+    <script>
+        // Mock cursor animator settings for testing
+        window.cursorAnimatorSettings = {
+            animationType: 'trail',
+            trailLength: '20',
+            trailColor: '#ff6b6b',
+            trailSize: '8',
+            animationSpeed: '0.8',
+            enableOnMobile: '1',
+            cursorStyle: 'default',
+            customCursorUrl: '',
+            cursorSize: '32'
+        };
+
+        // Load the cursor animator script
+        function loadCursorAnimator() {
+            const script = document.createElement('script');
+            script.src = './assets/js/cursor-animator.js';
+            script.onload = function () {
+                console.log('Cursor Animator loaded successfully');
+                updateStatus('success', 'Cursor Animator script loaded successfully');
+                updateDebugInfo();
+            };
+            script.onerror = function () {
+                console.error('Failed to load Cursor Animator script');
+                updateStatus('error', 'Failed to load Cursor Animator script');
+            };
+            document.head.appendChild(script);
+        }
+
+        // Change cursor style for testing
+        function changeCursorStyle(style) {
+            if (window.cursorAnimatorSettings) {
+                window.cursorAnimatorSettings.cursorStyle = style;
+                document.body.style.cursor = style;
+                updateStatus('info', `Cursor style changed to: ${style}`);
+            }
+        }
+
+        // Update status display
+        function updateStatus(type, message) {
+            const container = document.getElementById('status-container');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status ${type}`;
+            statusDiv.textContent = message;
+            container.appendChild(statusDiv);
+
+            // Remove old status messages
+            setTimeout(() => {
+                if (statusDiv.parentNode) {
+                    statusDiv.parentNode.removeChild(statusDiv);
+                }
+            }, 5000);
+        }
+
+        // Update debug information
+        function updateDebugInfo() {
+            const debugOutput = document.getElementById('debug-output');
+            const settings = window.cursorAnimatorSettings;
+
+            debugOutput.innerHTML = `
+                <strong>Plugin Status:</strong> ${settings ? 'Loaded' : 'Not Found'}<br>
+                <strong>Animation Type:</strong> ${settings?.animationType || 'Unknown'}<br>
+                <strong>Cursor Style:</strong> ${settings?.cursorStyle || 'Unknown'}<br>
+                <strong>Trail Color:</strong> ${settings?.trailColor || 'Unknown'}<br>
+                <strong>Trail Length:</strong> ${settings?.trailLength || 'Unknown'}<br>
+                <strong>Mobile Enabled:</strong> ${settings?.enableOnMobile || 'Unknown'}<br>
+                <strong>Canvas Elements:</strong> ${document.querySelectorAll('canvas').length}<br>
+                <strong>Timestamp:</strong> ${new Date().toLocaleTimeString()}
+            `;
+        }
+
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('Test page loaded');
+            updateStatus('info', 'Test page loaded successfully');
+
+            // Load cursor animator
+            loadCursorAnimator();
+
+            // Update debug info every 2 seconds
+            setInterval(updateDebugInfo, 2000);
+
+            // Test canvas creation
+            setTimeout(() => {
+                const canvases = document.querySelectorAll('canvas');
+                if (canvases.length > 0) {
+                    updateStatus('success', `Canvas created successfully (${canvases.length} found)`);
+                } else {
+                    updateStatus('error', 'No canvas elements found - animation may not be working');
+                }
+            }, 1000);
+        });
+
+        // Test different animation types
+        function testAnimationType(type) {
+            if (window.cursorAnimatorSettings) {
+                window.cursorAnimatorSettings.animationType = type;
+                updateStatus('info', `Animation type changed to: ${type}`);
+                // Reload the script to apply changes
+                location.reload();
+            }
+        }
+
+        // Add keyboard shortcuts for testing
+        document.addEventListener('keydown', function (e) {
+            switch (e.key) {
+                case '1':
+                    testAnimationType('trail');
+                    break;
+                case '2':
+                    testAnimationType('particles');
+                    break;
+                case '3':
+                    testAnimationType('ripple');
+                    break;
+                case '4':
+                    testAnimationType('magnetic');
+                    break;
+                case 'r':
+                    location.reload();
+                    break;
+            }
+        });
+
+        console.log('Test page initialized. Use keys 1-4 to change animation types, R to reload.');
+    </script>
+</body>
+
+</html>

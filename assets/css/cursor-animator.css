@@ -1,0 +1,428 @@
+/**
+ * Cursor Animator - WordPress Plugin
+ * Additional styles for cursor animations
+ */
+
+/* Ensure canvas is properly positioned */
+.cursor-animator-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+    mix-blend-mode: multiply;
+}
+
+/* Hide cursor on elements that have magnetic effect */
+.magnetic,
+[data-magnetic] {
+    cursor: none;
+}
+
+/* Custom cursor for magnetic elements */
+.magnetic:hover,
+[data-magnetic]:hover {
+    cursor: none;
+}
+
+/* Ensure the canvas doesn't interfere with form elements */
+input,
+textarea,
+select,
+button {
+    position: relative;
+    z-index: 1;
+}
+
+/* Performance optimizations */
+.cursor-animator-canvas {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .cursor-animator-canvas {
+        display: none;
+    }
+
+    /* Show canvas only if mobile is enabled */
+    .cursor-animator-mobile-enabled .cursor-animator-canvas {
+        display: block;
+    }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    .cursor-animator-canvas {
+        display: none !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .cursor-animator-canvas {
+        mix-blend-mode: normal;
+    }
+}
+
+/* Print styles */
+@media print {
+    .cursor-animator-canvas {
+        display: none !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.cursor-animator-canvas:focus {
+    outline: none;
+}
+
+/* Ensure canvas doesn't block keyboard navigation */
+.cursor-animator-canvas {
+    pointer-events: none;
+}
+
+/* Smooth transitions for magnetic elements */
+.magnetic,
+[data-magnetic] {
+    transition: transform 0.1s ease-out;
+}
+
+/* Prevent text selection during magnetic interactions */
+.magnetic,
+[data-magnetic] {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Ensure proper stacking context */
+body {
+    position: relative;
+}
+
+/* Canvas performance hints */
+.cursor-animator-canvas {
+    image-rendering: optimizeSpeed;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+    image-rendering: pixelated;
+}
+
+/* Fallback for older browsers */
+@supports not (mix-blend-mode: multiply) {
+    .cursor-animator-canvas {
+        mix-blend-mode: normal;
+        opacity: 0.8;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .cursor-animator-canvas {
+        mix-blend-mode: screen;
+    }
+}
+
+/* Ensure canvas works with fixed positioning elements */
+.fixed,
+.position-fixed {
+    z-index: 1;
+}
+
+/* Canvas should always be on top */
+.cursor-animator-canvas {
+    z-index: 2147483647;
+}
+
+/* Prevent canvas from affecting scroll performance */
+.cursor-animator-canvas {
+    contain: layout style paint;
+}
+
+/* Optimize for high DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+    .cursor-animator-canvas {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Cursor Style Support */
+/* Default cursor styles */
+.cursor-default {
+    cursor: default !important;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.cursor-crosshair {
+    cursor: crosshair !important;
+}
+
+.cursor-text {
+    cursor: text !important;
+}
+
+.cursor-wait {
+    cursor: wait !important;
+}
+
+.cursor-move {
+    cursor: move !important;
+}
+
+.cursor-grab {
+    cursor: grab !important;
+}
+
+.cursor-zoom-in {
+    cursor: zoom-in !important;
+}
+
+.cursor-zoom-out {
+    cursor: zoom-out !important;
+}
+
+.cursor-hidden {
+    cursor: none !important;
+}
+
+/* Custom cursor support */
+.cursor-custom {
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTggOEwyNCAyNEw4IDI0TDggOFoiIGZpbGw9IiM2NjdlZWEiLz4KPC9zdmc+') 16 16, auto !important;
+}
+
+/* Element-specific cursor overrides */
+/* Links and buttons should always show pointer */
+a,
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    cursor: pointer !important;
+}
+
+/* Text inputs should show text cursor */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea {
+    cursor: text !important;
+}
+
+/* Draggable elements */
+[draggable="true"],
+.draggable {
+    cursor: grab !important;
+}
+
+[draggable="true"]:active,
+.draggable:active {
+    cursor: grabbing !important;
+}
+
+/* Magnetic elements */
+.magnetic,
+[data-magnetic] {
+    cursor: pointer !important;
+}
+
+/* Disable cursor animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .cursor-animator-canvas {
+        display: none !important;
+    }
+
+    /* Reset all custom cursors */
+    * {
+        cursor: auto !important;
+    }
+
+    /* Restore essential cursors */
+    a,
+    button,
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"] {
+        cursor: pointer !important;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="search"],
+    input[type="url"],
+    input[type="tel"],
+    textarea {
+        cursor: text !important;
+    }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+    .cursor-animator-canvas {
+        mix-blend-mode: normal;
+        opacity: 0.9;
+    }
+}
+
+/* Focus indicators for accessibility */
+.cursor-animator-canvas:focus-visible {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Ensure proper cursor behavior in different contexts */
+/* When cursor is hidden, show it on hover for accessibility */
+.cursor-hidden:hover {
+    cursor: default !important;
+}
+
+/* Custom cursor fallback for older browsers */
+@supports not (cursor: url()) {
+    .cursor-custom {
+        cursor: pointer !important;
+    }
+}
+
+/* Ensure cursor styles work with transform animations */
+.magnetic,
+[data-magnetic] {
+    transform-origin: center center;
+}
+
+/* Prevent cursor flickering during animations */
+* {
+    cursor: inherit;
+}
+
+/* Specific cursor styles for different states */
+.cursor-loading {
+    cursor: wait !important;
+}
+
+.cursor-disabled {
+    cursor: not-allowed !important;
+}
+
+.cursor-help {
+    cursor: help !important;
+}
+
+.cursor-progress {
+    cursor: progress !important;
+}
+
+.cursor-vertical-text {
+    cursor: vertical-text !important;
+}
+
+.cursor-alias {
+    cursor: alias !important;
+}
+
+.cursor-copy {
+    cursor: copy !important;
+}
+
+.cursor-no-drop {
+    cursor: no-drop !important;
+}
+
+.cursor-all-scroll {
+    cursor: all-scroll !important;
+}
+
+.cursor-col-resize {
+    cursor: col-resize !important;
+}
+
+.cursor-row-resize {
+    cursor: row-resize !important;
+}
+
+.cursor-n-resize {
+    cursor: n-resize !important;
+}
+
+.cursor-e-resize {
+    cursor: e-resize !important;
+}
+
+.cursor-s-resize {
+    cursor: s-resize !important;
+}
+
+.cursor-w-resize {
+    cursor: w-resize !important;
+}
+
+.cursor-ne-resize {
+    cursor: ne-resize !important;
+}
+
+.cursor-nw-resize {
+    cursor: nw-resize !important;
+}
+
+.cursor-se-resize {
+    cursor: se-resize !important;
+}
+
+.cursor-sw-resize {
+    cursor: sw-resize !important;
+}
+
+/* Cursor Animator Styles */
+
+/* Hide default cursor when using custom cursor */
+body.custom-cursor {
+    cursor: none;
+}
+
+/* Custom cursor styles */
+.custom-cursor-pointer {
+    cursor: pointer !important;
+}
+
+.custom-cursor-text {
+    cursor: text !important;
+}
+
+.custom-cursor-grab {
+    cursor: grab !important;
+}
+
+.custom-cursor-grabbing {
+    cursor: grabbing !important;
+}
+
+/* Magnetic effect styles */
+.magnetic {
+    transition: transform 0.1s ease-out;
+}
+
+/* Animation canvas */
+#cursor-animator-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: multiply;
+}
